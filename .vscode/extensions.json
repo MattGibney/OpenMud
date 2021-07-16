@@ -1,0 +1,10 @@
+// I strongly recommend these extensions. They will make it much easier to work on
+// this project. They are honestly all really great!
+{
+  "recommendations": [
+    "ryanluker.vscode-coverage-gutters",
+    "dbaeumer.vscode-eslint",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode"
+  ]
+}

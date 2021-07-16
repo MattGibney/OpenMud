@@ -1,0 +1,6 @@
+{
+  // This setting is incredibly useful. It effectively runs things like linting
+  // rules across all of the files of your project, rather than only the ones
+  // that are currently open.
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
+}
