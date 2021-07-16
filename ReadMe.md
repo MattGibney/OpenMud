@@ -13,3 +13,24 @@ I am not a writer, nor am I a world builder. It's very likely that the world I
 build for this game will be un-inspired and a littel cliché. That being said,
 i'll always do my best; hopefully along the way i'll get the attention of some
 passionate world-builders who want to help me out in my endeavour.
+
+## Development
+
+### Comments in code
+
+There are somme pretty strong opinions on either side of the fence when it comes
+to comments in codebases. In my opinion, they are incredibly important. Comments
+exist to provide context to code where it otherwise doesn't exist or isn't
+clear. Comments should always be added wherever it is importnat to explain why a
+piece of code works in a particular way, they should not describe what the code
+is doing.
+
+As a general rule of thumb, you should always assume that whoever is reading
+your code (including yourself in 6 months when you've forgotten all about it)
+knows how to code and understands what the code is doing. Your comments should
+explain **why** it's done in that particular way.
+
+The main exception to this rule is when adding comments to abstractions, such as
+functions or classes. Comments in these situations acts like documentation to
+your code. It describes to another programmer what your function does and how to
+use it.

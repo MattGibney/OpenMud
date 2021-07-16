@@ -41,4 +41,6 @@ doing so.
 
 To begin with, I will be working on what I consider to be a minimum viable
 product. The features will be incredibly limited, but they will be a good
-starting point for me to build from.
+starting point for me to build from. I have created a series of "issues" within
+Github to represent the required development work for this MVP
+[Milestone](https://github.com/Moppler/OpenMud/milestone/1).
