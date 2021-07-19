@@ -19,10 +19,13 @@
   },
   "homepage": "https://github.com/Moppler/OpenMud#readme",
   "devDependencies": {
+    "@types/mocha": "^8.2.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.31.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "mocha": "^9.0.2",
+    "mocha-eslint": "^7.0.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "ts-node": "^10.1.0",
