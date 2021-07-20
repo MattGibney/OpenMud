@@ -5,6 +5,41 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Development work begins (Monday 19th July 2021)
+
+I've started development now. The primary focus to begin with is to get
+something that's functional. It isn't going to be amazing by any standards but
+it is a starting point. The primary focus with development right now is to
+define clear interfaces. For example, I have implemented the telnet connection
+support, I did this in a way that abstracts the connection from the game logic.
+It would be trivial to switch out the telnet connection for something else. It
+should also be possible to run multiple connection servers at the same time,
+allowing players with different connections to share the same game server.
+
+I don't feel like there is too much to talk about yet. It's mostly just been
+busy work. A lot of the configs are pulled directly from other projects I've
+worked on in the past. This is going to one of my first big projecvts using
+Typescript. Until now, I have mostly focused on pure NodeJs. Why switch to
+Typescript now? I won't lie, a considerable chunk of it is me jumping on the
+bandwagon. JSDoc and VS Code already game me a pretty decent way of typing my
+codebase and caught a heck of a lot of bugs before they became problems.
+Typescript is nice becaue it's actually scrict about this, but other than that,
+I haven't rteally come across a reason to use it.
+
+It would probably be a good idea to talk very briefly about the addition of a
+file called `modelFactory.ts`. As the name may suggest, it's a factory for
+models. I think that the factory pattern is particularly strong, it has served
+me well over the years and makes writing testable code much easier. This
+particular factory is incredibly simple. It doesn't really do anything, I could
+just as easily import the models directly if I wanted to. The main benefit to
+using a factory is that I avoid the circular dependancy issue where in the
+future, I could have models requiring each other in an edless loop. It's caught
+me out before. As I've already said, it also makes testing a lot easier.
+
+The Factory pattern will be very powerful over time, especially as the
+application gains complexity. I'll save more specific descriptions for either in
+code documentation or a future blog post.
+
 ## Introduction (Friday 16th July 2021)
 
 Honestly, I have no idea at this point how many times I have started to work on
