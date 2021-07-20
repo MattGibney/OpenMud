@@ -12,8 +12,7 @@ export default class ConnectionModel {
   }
 
   clientInputHandler(data: string): void {
-    console.log('CONNECTION ACCEPTS DATA', data);
-    this.sendMessage('RESPONSE!');
+    this.sendMessage('RESPONSE!' + data);
   }
 
   sendMessage(message: string): void {
