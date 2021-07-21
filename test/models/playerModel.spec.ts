@@ -7,6 +7,55 @@ import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
 describe('PlayerModel', function () {
+  describe('(get) currentRoom', function () {
+    it('should throw an exception if the player is in a non-existant room', function () {
+      const mockModelFactory = {} as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
+      const mockConnection = {} as ConnectionModel;
+      const mockGameInstance = {
+        rooms: [],
+      } as unknown as Game;
+      const player = new PlayerModel(
+        mockModelFactory,
+        mockDaoFactory,
+        mockConnection,
+        mockGameInstance,
+        {}
+      );
+
+      const currentRoomSpy = sinon.spy(player, 'currentRoom', ['get']);
+
+      try {
+        player.currentRoom;
+      } catch (e) {
+        // Don't really care about this. We are asserting on the exception below.
+      }
+
+      sinon.assert.threw(
+        currentRoomSpy.get,
+        'Player is in a room that does not exist!'
+      );
+    });
+    it('should return the room that the player is in', function () {
+      const mockRoom = { id: 1 };
+
+      const mockModelFactory = {} as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
+      const mockConnection = {} as ConnectionModel;
+      const mockGameInstance = {
+        rooms: [mockRoom],
+      } as unknown as Game;
+      const player = new PlayerModel(
+        mockModelFactory,
+        mockDaoFactory,
+        mockConnection,
+        mockGameInstance,
+        {}
+      );
+
+      assert.equal(player.currentRoom, mockRoom);
+    });
+  });
   describe('processCommand', function () {
     it('should tell the play if they attempt a bad command', function () {
       const mockModelFactory = {} as ModelFactory;

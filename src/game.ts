@@ -35,7 +35,8 @@ export default class Game {
   initialise(): void {
     this.rooms = this.ModelFactory.room.fetchAllRooms(
       this.ModelFactory,
-      this.DaoFactory
+      this.DaoFactory,
+      this
     );
   }
 
