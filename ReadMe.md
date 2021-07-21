@@ -9,7 +9,7 @@ approach problems.
 
 ## Development
 
-## Getting Started
+### Getting Started
 
 Running the application:
 
@@ -20,6 +20,12 @@ Running the application:
 Running tests:
 
 `npn test` to run once. `npm run watch:test` to run the tests on save.
+
+### Branches
+
+The main branch for the repository is `develop`. All branches for feature work
+are to be created from `develop` and merged back to `develop`. the `main` branch
+is to represent the production environment.
 
 ### Comments in code
 
