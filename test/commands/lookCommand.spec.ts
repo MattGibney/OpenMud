@@ -25,6 +25,7 @@ describe('lookCommand', function () {
     Sinon.stub(player, 'currentRoom').get(() => ({
       title: 'Test Room',
       description: 'Test Description',
+      exits: [{ direction: 'N' }],
       playersInRoom: [{}],
     }));
 
@@ -34,7 +35,7 @@ describe('lookCommand', function () {
 
     Sinon.assert.calledWith(
       stubSendMessage,
-      'Test Room\nTest Description\nThere are 1 players here.'
+      'Test Room\nTest Description\n\nThere are 1 players here.\n\nExits: N'
     );
   });
 });

@@ -20,12 +20,14 @@ describe('roomModel', function () {
           id: 11,
           title: 'Test Title',
           description: 'This is a description',
+          exits: [],
         }
       );
 
       assert.equal(room.id, 11);
       assert.equal(room.title, 'Test Title');
       assert.equal(room.description, 'This is a description');
+      assert.deepEqual(room.exits, []);
     });
   });
   describe('(get) playersInRoom', function () {
@@ -42,6 +44,7 @@ describe('roomModel', function () {
           id: 11,
           title: 'Test Title',
           description: 'This is a description',
+          exits: [],
         }
       );
 
