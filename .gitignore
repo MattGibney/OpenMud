@@ -4,3 +4,7 @@ node_modules/
 # Code Coverage
 coverage/
 .nyc_output/
+
+# Compiled Code
+dist/
+builds/

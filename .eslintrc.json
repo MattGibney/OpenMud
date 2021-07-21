@@ -16,5 +16,6 @@
     "no-console": "off",
     "quotes": [2, "single"],
     "prettier/prettier": "error"
-  }
+  },
+  "ignorePatterns": "dist/**/*"
 }
