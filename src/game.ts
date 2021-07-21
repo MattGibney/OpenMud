@@ -1,3 +1,4 @@
+import { CommandFactory } from './commandFactory';
 import ModelFactory from './modelFactory';
 import ConnectionModel, {
   MessageWriterFunction,
@@ -10,12 +11,12 @@ import PlayerModel from './models/playerModel';
  */
 export default class Game {
   private ModelFactory: ModelFactory;
-
   private connections: ConnectionModel[];
+  private commandFactory: CommandFactory;
 
-  constructor(ModelFactory: ModelFactory) {
+  constructor(ModelFactory: ModelFactory, commandFactory: CommandFactory) {
     this.ModelFactory = ModelFactory;
-
+    this.commandFactory = commandFactory;
     this.connections = [];
   }
 
@@ -29,7 +30,8 @@ export default class Game {
     const newConnection = new this.ModelFactory.connection(
       this.ModelFactory,
       messageWriter,
-      this
+      this,
+      this.commandFactory
     );
 
     // Auto authenticating as players currently have no state

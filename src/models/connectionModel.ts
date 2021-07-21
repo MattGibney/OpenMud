@@ -1,3 +1,4 @@
+import { CommandFactory } from '../commandFactory';
 import Game from '../game';
 import ModelFactory from '../modelFactory';
 import PlayerModel from './playerModel';
@@ -12,17 +13,20 @@ export default class ConnectionModel {
   private ModelFactory: ModelFactory;
   private clientMessageWriter: MessageWriterFunction;
   private gameInstance: Game;
+  private commandFactory: CommandFactory;
 
   public player!: PlayerModel;
 
   constructor(
     ModelFactory: ModelFactory,
     messageWriter: MessageWriterFunction,
-    gameInstance: Game
+    gameInstance: Game,
+    commandFactory: CommandFactory
   ) {
     this.ModelFactory = ModelFactory;
     this.clientMessageWriter = messageWriter;
     this.gameInstance = gameInstance;
+    this.commandFactory = commandFactory;
   }
 
   get isAuthenitcated(): boolean {
@@ -32,7 +36,8 @@ export default class ConnectionModel {
   authenticatePlayer(): void {
     this.player = this.ModelFactory.player.createPlayer(
       this,
-      this.gameInstance
+      this.gameInstance,
+      this.commandFactory
     );
   }
 

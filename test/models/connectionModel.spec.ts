@@ -20,7 +20,8 @@ describe('ConnectionModel', function () {
       const connection = new ConnectionModel(
         mockModelFactory,
         sinon.stub(),
-        mockGameInstance
+        mockGameInstance,
+        {}
       );
 
       connection.authenticatePlayer();
@@ -38,7 +39,8 @@ describe('ConnectionModel', function () {
       const connection = new ConnectionModel(
         modelFactory,
         mockMessageWriter,
-        gameInstance
+        gameInstance,
+        {}
       );
 
       const mockPlayerStubProcessCommand = stub();
@@ -63,7 +65,8 @@ describe('ConnectionModel', function () {
       const connection = new ConnectionModel(
         modelFactory,
         mockMessageWriter,
-        gameInstance
+        gameInstance,
+        {}
       );
 
       const response = connection.clientInputHandler('This is a test');
@@ -80,7 +83,8 @@ describe('ConnectionModel', function () {
       const connection = new ConnectionModel(
         modelFactory,
         mockMessageWriter,
-        gameInstance
+        gameInstance,
+        {}
       );
 
       connection.sendMessage('This is a test');

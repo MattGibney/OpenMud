@@ -1,7 +1,10 @@
 import Game from '../game';
 import ConnectionModel from './connectionModel';
 
-import commandFactory, { CommandFunction } from '../commandFactory';
+import commandFactory, {
+  CommandFactory,
+  CommandFunction,
+} from '../commandFactory';
 
 export interface ParsedCommand {
   instruction: keyof typeof commandFactory;
@@ -9,18 +12,25 @@ export interface ParsedCommand {
 
 export default class PlayerModel {
   private connection: ConnectionModel;
+  private commandFactory: CommandFactory;
   public gameInstance: Game;
 
-  constructor(connection: ConnectionModel, gameInstance: Game) {
+  constructor(
+    connection: ConnectionModel,
+    gameInstance: Game,
+    commandFactory: CommandFactory
+  ) {
     this.connection = connection;
     this.gameInstance = gameInstance;
+
+    this.commandFactory = commandFactory;
   }
 
   processCommand(rawCommand: string): void {
     const command: ParsedCommand = this.parsedCommand(rawCommand);
 
     const commandFunction: CommandFunction =
-      commandFactory[command.instruction];
+      this.commandFactory[command.instruction];
     if (!commandFunction) {
       return this.sendMessage('Command not recognised');
     }
@@ -40,8 +50,9 @@ export default class PlayerModel {
 
   static createPlayer(
     connection: ConnectionModel,
-    gameInstance: Game
+    gameInstance: Game,
+    commandFactory: CommandFactory
   ): PlayerModel {
-    return new PlayerModel(connection, gameInstance);
+    return new PlayerModel(connection, gameInstance, commandFactory);
   }
 }
