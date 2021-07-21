@@ -21,6 +21,30 @@ Running tests:
 
 `npn test` to run once. `npm run watch:test` to run the tests on save.
 
+### Deployment
+
+#### Build Script
+
+Deployments are always done from GIT tags. Once done, you will have a new
+tarball for the version of your application that you are deploying.
+
+1. Ensure your GIT working directory is clean
+2. Ensure that the version number in your `package.json` matches the tag you
+wish to deploy.
+3. Run the build command `./dev-bin/build.sh 0.0.1` replacing the version number
+with the one you want to deploy
+
+#### Deploy Script
+
+Deployment assumes that your target server is set up correctly. Details not
+provided as everyone manages their server differently. You can see the script
+for guidance on how it's done in this project, but you will need to re-implement
+to fit your own needs.
+
+1. Ensure your GIT working directory is clean
+2. Run the deploy command `./dev-bin/deploy.sh 0.0.1 USERNAME@SERVERIP`. Please
+note that the second argument is an SSH connection string.
+
 ### Branches
 
 The main branch for the repository is `develop`. All branches for feature work
