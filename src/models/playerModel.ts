@@ -27,7 +27,7 @@ export default class PlayerModel {
   }
 
   processCommand(rawCommand: string): void {
-    const command: ParsedCommand = this.parsedCommand(rawCommand);
+    const command: ParsedCommand = this.parseCommand(rawCommand);
 
     const commandFunction: CommandFunction =
       this.commandFactory[command.instruction];
@@ -37,7 +37,7 @@ export default class PlayerModel {
     return commandFunction(this);
   }
 
-  parsedCommand(rawCommand: string): ParsedCommand {
+  parseCommand(rawCommand: string): ParsedCommand {
     const instruction = rawCommand.split(' ')[0] as keyof typeof commandFactory;
     return {
       instruction: instruction,

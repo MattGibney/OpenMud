@@ -5,6 +5,18 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Getting Testy (Wednesday 21st July 2021)
+
+In implementing the unit tests for the player model, i've refactored the way the
+command factory reaches the player model. Previously, the application would
+directly import the factory, however this made unit testing quite difficult as
+it's hard to stub the imported code. I instead opted to pass the factory object
+through the application. This is possibly a little over kill but it would offer
+me some interesting possibilities in the future. Having access to the list of
+all commands may actually end up being quite useful. As an absolute minimum
+example, the help command (which lists all commands) would be ale to use the
+list directly.
+
 ## Command Parsing (Tuesday 20th July 2021)
 
 As the title suggests, the main effort today was in adding command parsing

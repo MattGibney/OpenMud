@@ -1,6 +1,7 @@
 {
   "all": true,
   "exclude": [
+    "src/app.ts",
     "test", 
     "coverage"
   ]
