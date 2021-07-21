@@ -32,7 +32,6 @@ interacting with it. For the time being, rooms will be stored in-repo as a part
 of the codebase. They may be broken out in the future, but the name of the game
 here is to keep things simple.
 
-
 Introducing the DAO pattern. DAO's (Data Access Object) provide us with an
 interface to our data. They act as a separation between our business logic and
 the data itself. This approach makes it incredibly simple to move our data at a
@@ -42,6 +41,17 @@ codebase will contnue to function as normal. This use of Typescript in the
 project will copmpound this pattern as the strict type checking will alert us to
 any possible issues while developing as interfaces will no longer match up to
 our expectations if we do end up chaging the interface.
+
+My other main acheivement for today is to add in player movement. It is now
+possible to navigate in 3d space as long as the rooms are mapped out correctly.
+With the system implemented, it should theoretically be possible to create any
+environment. The maion drawback to the current implementation is that there can
+only be a single exit in each of the cardinal directions. In small spaces, such
+as the inside of a building, it may be necessary to have mopre than one exit in
+a single direction. I actually encounterd this when I was working on adding my
+own house as an environment for development. I chose to comprimise by moving the
+layout of the house around a little to accomodate but i'd like to re-visit this
+in the future.
 
 ## Command Parsing (Tuesday 20th July 2021)
 
