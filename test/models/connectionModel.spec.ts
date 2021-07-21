@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import sinon, { stub } from 'sinon';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
+import DaoFactory from '../../src/daoFactory';
 import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
@@ -15,10 +16,12 @@ describe('ConnectionModel', function () {
           createPlayer: createPlayerStub,
         } as unknown as typeof PlayerModel,
       } as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
       const mockGameInstance: Game = {} as Game;
 
       const connection = new ConnectionModel(
         mockModelFactory,
+        mockDaoFactory,
         sinon.stub(),
         mockGameInstance,
         {}
@@ -26,18 +29,26 @@ describe('ConnectionModel', function () {
 
       connection.authenticatePlayer();
 
-      sinon.assert.calledWith(createPlayerStub, connection, mockGameInstance);
+      sinon.assert.calledWith(
+        createPlayerStub,
+        mockModelFactory,
+        mockDaoFactory,
+        connection,
+        mockGameInstance
+      );
       assert.equal(connection.player, fakePlayerModel);
     });
   });
   describe('clientInputHandler', function () {
     it('should call the player process command method when authenticated', () => {
       const modelFactory: ModelFactory = {} as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
       const mockMessageWriter = sinon.stub();
       const connection = new ConnectionModel(
         modelFactory,
+        mockDaoFactory,
         mockMessageWriter,
         gameInstance,
         {}
@@ -58,12 +69,14 @@ describe('ConnectionModel', function () {
 
     it('should return undefined when the player is not authenticated', () => {
       const modelFactory: ModelFactory = {} as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
       const mockMessageWriter = sinon.stub();
 
       const connection = new ConnectionModel(
         modelFactory,
+        mockDaoFactory,
         mockMessageWriter,
         gameInstance,
         {}
@@ -77,11 +90,13 @@ describe('ConnectionModel', function () {
   describe('sendMessage', function () {
     it('uses the callback to send a message to the connected client.', function () {
       const modelFactory: ModelFactory = {} as ModelFactory;
+      const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
       const mockMessageWriter = sinon.stub();
       const connection = new ConnectionModel(
         modelFactory,
+        mockDaoFactory,
         mockMessageWriter,
         gameInstance,
         {}

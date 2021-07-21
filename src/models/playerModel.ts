@@ -5,21 +5,29 @@ import commandFactory, {
   CommandFactory,
   CommandFunction,
 } from '../commandFactory';
+import ModelFactory from '../modelFactory';
+import DaoFactory from '../daoFactory';
 
 export interface ParsedCommand {
   instruction: keyof typeof commandFactory;
 }
 
 export default class PlayerModel {
+  private ModelFactory: ModelFactory;
+  private DaoFactory: DaoFactory;
   private connection: ConnectionModel;
   private commandFactory: CommandFactory;
   public gameInstance: Game;
 
   constructor(
+    ModelFactory: ModelFactory,
+    DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory
   ) {
+    this.ModelFactory = ModelFactory;
+    this.DaoFactory = DaoFactory;
     this.connection = connection;
     this.gameInstance = gameInstance;
 
@@ -49,10 +57,18 @@ export default class PlayerModel {
   }
 
   static createPlayer(
+    ModelFactory: ModelFactory,
+    DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory
   ): PlayerModel {
-    return new PlayerModel(connection, gameInstance, commandFactory);
+    return new PlayerModel(
+      ModelFactory,
+      DaoFactory,
+      connection,
+      gameInstance,
+      commandFactory
+    );
   }
 }
