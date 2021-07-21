@@ -48,6 +48,10 @@ export default class PlayerModel {
     return currentRoom;
   }
 
+  set currentRoom(room: RoomModel) {
+    this.currentRoomId = room.id;
+  }
+
   processCommand(rawCommand: string): void {
     const command: ParsedCommand = this.parseCommand(rawCommand);
 

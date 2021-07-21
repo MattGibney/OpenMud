@@ -4,6 +4,8 @@ import { RoomData } from '../daos/roomDao';
 import Game from '../game';
 import PlayerModel from './playerModel';
 
+export type RoomExitDirection = 'U' | 'D' | 'N' | 'E' | 'S' | 'W';
+
 export default class RoomModel {
   private ModelFactory: ModelFactory;
   private DaoFactory: DaoFactory;
@@ -11,6 +13,8 @@ export default class RoomModel {
   public id: number;
   public title: string;
   public description: string;
+
+  public exits: { direction: RoomExitDirection; roomId: number }[];
 
   constructor(
     ModelFactory: ModelFactory,
@@ -25,6 +29,8 @@ export default class RoomModel {
     this.id = roomData.id;
     this.title = roomData.title;
     this.description = roomData.description;
+
+    this.exits = roomData.exits;
   }
 
   get playersInRoom(): PlayerModel[] {
