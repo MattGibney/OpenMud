@@ -1,12 +1,12 @@
 import Sinon from 'sinon';
-import playerCountCommand from '../../src/commands/playerCountCommand';
+import lookCommand from '../../src/commands/lookCommand';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
 import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
-describe('playerCountCommand', function () {
+describe('lookCommand', function () {
   it('sends a message to the player with a count of active players', function () {
     const mockModelFactory = {} as ModelFactory;
     const mockDaoFactory = {} as DaoFactory;
@@ -22,10 +22,19 @@ describe('playerCountCommand', function () {
       {}
     );
 
+    Sinon.stub(player, 'currentRoom').get(() => ({
+      title: 'Test Room',
+      description: 'Test Description',
+      playersInRoom: [{}],
+    }));
+
     const stubSendMessage = Sinon.stub(player, 'sendMessage');
 
-    playerCountCommand(player);
+    lookCommand(player);
 
-    Sinon.assert.calledWith(stubSendMessage, 'There are 1 players online');
+    Sinon.assert.calledWith(
+      stubSendMessage,
+      'Test Room\nTest Description\nThere are 1 players here.'
+    );
   });
 });

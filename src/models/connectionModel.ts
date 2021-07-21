@@ -1,4 +1,5 @@
 import { CommandFactory } from '../commandFactory';
+import DaoFactory from '../daoFactory';
 import Game from '../game';
 import ModelFactory from '../modelFactory';
 import PlayerModel from './playerModel';
@@ -11,6 +12,7 @@ export type MessageWriterFunction = (message: string) => void;
 
 export default class ConnectionModel {
   private ModelFactory: ModelFactory;
+  private DaoFactory: DaoFactory;
   private clientMessageWriter: MessageWriterFunction;
   private gameInstance: Game;
   private commandFactory: CommandFactory;
@@ -19,11 +21,13 @@ export default class ConnectionModel {
 
   constructor(
     ModelFactory: ModelFactory,
+    DaoFactory: DaoFactory,
     messageWriter: MessageWriterFunction,
     gameInstance: Game,
     commandFactory: CommandFactory
   ) {
     this.ModelFactory = ModelFactory;
+    this.DaoFactory = DaoFactory;
     this.clientMessageWriter = messageWriter;
     this.gameInstance = gameInstance;
     this.commandFactory = commandFactory;
@@ -35,6 +39,8 @@ export default class ConnectionModel {
 
   authenticatePlayer(): void {
     this.player = this.ModelFactory.player.createPlayer(
+      this.ModelFactory,
+      this.DaoFactory,
       this,
       this.gameInstance,
       this.commandFactory

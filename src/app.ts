@@ -3,9 +3,13 @@ import Game from './game';
 
 import telnet from './networking/telnetServer';
 import commandFactory from './commandFactory';
+import DaoFactory from './daoFactory';
 
 const modelFactory = new ModelFactory();
-const game = new Game(modelFactory, commandFactory);
+const daoFactory = new DaoFactory();
+const game = new Game(modelFactory, daoFactory, commandFactory);
+
+game.initialise();
 
 // Telnet Server
 const telnetServer = telnet(game);

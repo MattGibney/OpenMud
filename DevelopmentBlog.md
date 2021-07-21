@@ -5,7 +5,7 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
-## Getting Testy (Wednesday 21st July 2021)
+## Getting Testy & Daos (Wednesday 21st July 2021)
 
 In implementing the unit tests for the player model, i've refactored the way the
 command factory reaches the player model. Previously, the application would
@@ -16,6 +16,32 @@ me some interesting possibilities in the future. Having access to the list of
 all commands may actually end up being quite useful. As an absolute minimum
 example, the help command (which lists all commands) would be ale to use the
 list directly.
+
+I've started implementing the Rooms feature now. Room isn't a great name for
+this, it's technically a representation of an area that multiple players can
+occupy at any one time. A room could be a broom cupboard, or it could be a vast
+desert. The word room does seem to be pretty standard amongst the MUD community
+though, so for now at least, it's what i'm going with. If a better name comes up
+in the future, i'll consider a rename.
+
+Rooms also represent the first instance where something in this game has some
+form of data. A noom nust at least have a name and a description. There will be
+many more properties in the future, but we don't need to worry about thise at
+the moment. Because rooms have data, we need some way of storing that data and
+interacting with it. For the time being, rooms will be stored in-repo as a part
+of the codebase. They may be broken out in the future, but the name of the game
+here is to keep things simple.
+
+
+Introducing the DAO pattern. DAO's (Data Access Object) provide us with an
+interface to our data. They act as a separation between our business logic and
+the data itself. This approach makes it incredibly simple to move our data at a
+later date without needing to worry about breaking functionality. As long as the
+interface that the DAO excposes remains the same, all ofther parts of the
+codebase will contnue to function as normal. This use of Typescript in the
+project will copmpound this pattern as the strict type checking will alert us to
+any possible issues while developing as interfaces will no longer match up to
+our expectations if we do end up chaging the interface.
 
 ## Command Parsing (Tuesday 20th July 2021)
 

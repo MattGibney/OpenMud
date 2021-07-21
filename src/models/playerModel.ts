@@ -5,25 +5,47 @@ import commandFactory, {
   CommandFactory,
   CommandFunction,
 } from '../commandFactory';
+import ModelFactory from '../modelFactory';
+import DaoFactory from '../daoFactory';
+import RoomModel from './roomModel';
 
 export interface ParsedCommand {
   instruction: keyof typeof commandFactory;
 }
 
 export default class PlayerModel {
+  private ModelFactory: ModelFactory;
+  private DaoFactory: DaoFactory;
   private connection: ConnectionModel;
   private commandFactory: CommandFactory;
+  private currentRoomId: number;
   public gameInstance: Game;
 
   constructor(
+    ModelFactory: ModelFactory,
+    DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory
   ) {
+    this.ModelFactory = ModelFactory;
+    this.DaoFactory = DaoFactory;
     this.connection = connection;
     this.gameInstance = gameInstance;
 
     this.commandFactory = commandFactory;
+
+    this.currentRoomId = 1;
+  }
+
+  get currentRoom(): RoomModel {
+    const currentRoom = this.gameInstance.rooms.find(
+      (room) => room.id === this.currentRoomId
+    );
+    if (!currentRoom) {
+      throw 'Player is in a room that does not exist!';
+    }
+    return currentRoom;
   }
 
   processCommand(rawCommand: string): void {
@@ -49,10 +71,18 @@ export default class PlayerModel {
   }
 
   static createPlayer(
+    ModelFactory: ModelFactory,
+    DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory
   ): PlayerModel {
-    return new PlayerModel(connection, gameInstance, commandFactory);
+    return new PlayerModel(
+      ModelFactory,
+      DaoFactory,
+      connection,
+      gameInstance,
+      commandFactory
+    );
   }
 }
