@@ -13,6 +13,6 @@ game.initialise();
 
 // Telnet Server
 const telnetServer = telnet(game);
-telnetServer.listen(3100, () =>
+telnetServer.listen(3200, () =>
   console.log('Listening to telnet connections on 3100')
 );
