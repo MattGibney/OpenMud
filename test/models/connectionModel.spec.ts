@@ -1,27 +1,91 @@
-import sinon from 'sinon';
+import { assert } from 'chai';
+import sinon, { stub } from 'sinon';
+import Game from '../../src/game';
+import ModelFactory from '../../src/modelFactory';
 import ConnectionModel from '../../src/models/connectionModel';
+import PlayerModel from '../../src/models/playerModel';
 
 describe('ConnectionModel', function () {
-  describe('clientInputHandler', function () {
-    /**
-     * This functionality will be replaced in the future with something more
-     * useful.
-     */
-    it('responds with the data it was given', () => {
-      const mockMessageWriter = sinon.stub();
-      const connection = new ConnectionModel(mockMessageWriter);
+  describe('authenticatePlayer', function () {
+    it('should set the player property to a PlayerModel instance', function () {
+      const fakePlayerModel = {} as PlayerModel;
+      const createPlayerStub = sinon.stub().returns(fakePlayerModel);
+      const mockModelFactory: ModelFactory = {
+        player: {
+          createPlayer: createPlayerStub,
+        } as unknown as typeof PlayerModel,
+      } as ModelFactory;
+      const mockGameInstance: Game = {} as Game;
 
-      const stubSendMessage = sinon.stub(connection, 'sendMessage');
+      const connection = new ConnectionModel(
+        mockModelFactory,
+        sinon.stub(),
+        mockGameInstance,
+        {}
+      );
+
+      connection.authenticatePlayer();
+
+      sinon.assert.calledWith(createPlayerStub, connection, mockGameInstance);
+      assert.equal(connection.player, fakePlayerModel);
+    });
+  });
+  describe('clientInputHandler', function () {
+    it('should call the player process command method when authenticated', () => {
+      const modelFactory: ModelFactory = {} as ModelFactory;
+      const gameInstance: Game = {} as Game;
+
+      const mockMessageWriter = sinon.stub();
+      const connection = new ConnectionModel(
+        modelFactory,
+        mockMessageWriter,
+        gameInstance,
+        {}
+      );
+
+      const mockPlayerStubProcessCommand = stub();
+      const mockPlayer: PlayerModel = {
+        processCommand: mockPlayerStubProcessCommand,
+      } as unknown as PlayerModel;
+      stub(connection, 'authenticatePlayer').callsFake(() => {
+        connection.player = mockPlayer;
+      });
+      connection.authenticatePlayer();
 
       connection.clientInputHandler('This is a test');
+      sinon.assert.calledWith(mockPlayerStubProcessCommand, 'This is a test');
+    });
 
-      sinon.assert.calledWith(stubSendMessage, 'RESPONSE!This is a test');
+    it('should return undefined when the player is not authenticated', () => {
+      const modelFactory: ModelFactory = {} as ModelFactory;
+      const gameInstance: Game = {} as Game;
+
+      const mockMessageWriter = sinon.stub();
+
+      const connection = new ConnectionModel(
+        modelFactory,
+        mockMessageWriter,
+        gameInstance,
+        {}
+      );
+
+      const response = connection.clientInputHandler('This is a test');
+
+      assert.isUndefined(response);
     });
   });
   describe('sendMessage', function () {
     it('uses the callback to send a message to the connected client.', function () {
+      const modelFactory: ModelFactory = {} as ModelFactory;
+      const gameInstance: Game = {} as Game;
+
       const mockMessageWriter = sinon.stub();
-      const connection = new ConnectionModel(mockMessageWriter);
+      const connection = new ConnectionModel(
+        modelFactory,
+        mockMessageWriter,
+        gameInstance,
+        {}
+      );
 
       connection.sendMessage('This is a test');
 

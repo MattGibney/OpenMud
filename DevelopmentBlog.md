@@ -5,6 +5,56 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Getting Testy (Wednesday 21st July 2021)
+
+In implementing the unit tests for the player model, i've refactored the way the
+command factory reaches the player model. Previously, the application would
+directly import the factory, however this made unit testing quite difficult as
+it's hard to stub the imported code. I instead opted to pass the factory object
+through the application. This is possibly a little over kill but it would offer
+me some interesting possibilities in the future. Having access to the list of
+all commands may actually end up being quite useful. As an absolute minimum
+example, the help command (which lists all commands) would be ale to use the
+list directly.
+
+## Command Parsing (Tuesday 20th July 2021)
+
+As the title suggests, the main effort today was in adding command parsing
+capabilities. I've implemented a system that should make it pretty easy to add
+more features over time. Commands essentially get the playerModel when the
+command is executed. The code can access the Game instance from the player
+object, because of this, we have the ability to perform actions not only on the
+player, but on the entire game if we wish.
+
+Implementing this feature required a fair bit of additional development work
+too. I had to add the concept of a `player` to begin with. Up until now, there
+has only been the connection. However, it's vital that the connection code is
+kept doing just that, connections. By abstracting everything out, it leavs us
+open int he future to add additional connection layers without having to
+re-architect out codebase. It's one of those situations where it seems like
+un-necessary effort at the beginning but as the codebase matures, it'll be clear
+that this was the right choice. I speak from industry experience here so I'm
+very confident of this.
+
+As per the instructions of the github issue tied to this feature, I have
+implemented the command `playerCount`. It's very likely that this will be
+removed before the game goes live but it's a really useful command for testing /
+demonstrating the capabilities of the command system. The command itself is
+really quite simple. It calls into the game instance and fetches a list of
+authenticated players. The command then performs a count of the length of the
+array and boom.
+
+Something else I added as part of my development was code coverage to the test
+suite. Coverage is incredibly useful in development, it's easy to get false
+positives, but when used properly it helps a lot to find gaps in test coverage.
+I'm having some trouble with it though. My current set up is lifted from
+previous projects that used javascript. After some time with Google I manage to
+get it to understand typescript files, but it's not providing coverage for the
+entire codebase, only the files that are included by the testing environment. I
+gave up after around 30 mins of struggling with this, choosing instead to focus
+on implementing the feature. I still have some tests to write to cover the
+development work done so far, but the feature is largely done.
+
 ## Development work begins (Monday 19th July 2021)
 
 I've started development now. The primary focus to begin with is to get
