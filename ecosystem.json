@@ -1,7 +1,7 @@
 {
   "apps": [{
     "name": "openmud",
-    "script": "arc/app.js",
+    "script": "src/app.js",
     "cwd": "/deploy/openmud/current", 
     "error_file": "/deploy/openmud/logs/app.err.log",
     "out_file": "../logs/app.out.log",
