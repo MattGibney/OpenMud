@@ -153,7 +153,7 @@ describe('PlayerModel', function () {
       );
 
       player.sendMessage('This is a test message');
-      Sinon.assert.calledWith(mockSendMessage, 'This is a test message\n');
+      Sinon.assert.calledWith(mockSendMessage, 'This is a test message');
     });
   });
   describe('(static) createPlayer', function () {

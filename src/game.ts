@@ -46,6 +46,27 @@ export default class Game {
       .map((connection) => connection.player);
   }
 
+  get welcomeScreen(): string {
+    return String.raw`
+Welcome to Open Mud
+
+                  / )
+  (\__/)         ( (
+  )    (          ) )
+={      }=       / /
+  )     '-------/ /
+  (               /
+  \              |
+  ,'\       ,    ,'
+  '-'\  ,---\   | \
+    _) )    '. \ /
+    (__/       ) )
+              (_/
+
+There is currently ${this.players.length} players online.
+`;
+  }
+
   createConnection(messageWriter: MessageWriterFunction): ConnectionModel {
     const newConnection = new this.ModelFactory.connection(
       this.ModelFactory,
@@ -54,6 +75,8 @@ export default class Game {
       this,
       this.commandFactory
     );
+
+    newConnection.sendMessage(this.welcomeScreen);
 
     // Auto authenticating as players currently have no state
     newConnection.authenticatePlayer();

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import sinon, { stub } from 'sinon';
+import * as Sinon from 'sinon';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
 import DaoFactory from '../../src/daoFactory';
@@ -10,7 +10,7 @@ describe('ConnectionModel', function () {
   describe('authenticatePlayer', function () {
     it('should set the player property to a PlayerModel instance', function () {
       const fakePlayerModel = {} as PlayerModel;
-      const createPlayerStub = sinon.stub().returns(fakePlayerModel);
+      const createPlayerStub = Sinon.stub().returns(fakePlayerModel);
       const mockModelFactory: ModelFactory = {
         player: {
           createPlayer: createPlayerStub,
@@ -22,14 +22,14 @@ describe('ConnectionModel', function () {
       const connection = new ConnectionModel(
         mockModelFactory,
         mockDaoFactory,
-        sinon.stub(),
+        Sinon.stub(),
         mockGameInstance,
         {}
       );
 
       connection.authenticatePlayer();
 
-      sinon.assert.calledWith(
+      Sinon.assert.calledWith(
         createPlayerStub,
         mockModelFactory,
         mockDaoFactory,
@@ -45,7 +45,7 @@ describe('ConnectionModel', function () {
       const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
-      const mockMessageWriter = sinon.stub();
+      const mockMessageWriter = Sinon.stub();
       const connection = new ConnectionModel(
         modelFactory,
         mockDaoFactory,
@@ -54,17 +54,17 @@ describe('ConnectionModel', function () {
         {}
       );
 
-      const mockPlayerStubProcessCommand = stub();
+      const mockPlayerStubProcessCommand = Sinon.stub();
       const mockPlayer: PlayerModel = {
         processCommand: mockPlayerStubProcessCommand,
       } as unknown as PlayerModel;
-      stub(connection, 'authenticatePlayer').callsFake(() => {
+      Sinon.stub(connection, 'authenticatePlayer').callsFake(() => {
         connection.player = mockPlayer;
       });
       connection.authenticatePlayer();
 
       connection.clientInputHandler('This is a test');
-      sinon.assert.calledWith(mockPlayerStubProcessCommand, 'This is a test');
+      Sinon.assert.calledWith(mockPlayerStubProcessCommand, 'This is a test');
     });
 
     it('should return undefined when the player is not authenticated', () => {
@@ -72,7 +72,7 @@ describe('ConnectionModel', function () {
       const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
-      const mockMessageWriter = sinon.stub();
+      const mockMessageWriter = Sinon.stub();
 
       const connection = new ConnectionModel(
         modelFactory,
@@ -93,7 +93,7 @@ describe('ConnectionModel', function () {
       const mockDaoFactory = {} as DaoFactory;
       const gameInstance: Game = {} as Game;
 
-      const mockMessageWriter = sinon.stub();
+      const mockMessageWriter = Sinon.stub();
       const connection = new ConnectionModel(
         modelFactory,
         mockDaoFactory,
@@ -104,7 +104,7 @@ describe('ConnectionModel', function () {
 
       connection.sendMessage('This is a test');
 
-      sinon.assert.calledWith(mockMessageWriter, 'This is a test');
+      Sinon.assert.calledWith(mockMessageWriter, 'This is a test\n');
     });
   });
 });
