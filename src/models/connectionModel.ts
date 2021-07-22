@@ -58,6 +58,6 @@ export default class ConnectionModel {
   }
 
   sendMessage(message: string): void {
-    this.clientMessageWriter(message);
+    this.clientMessageWriter(`${message}\n`);
   }
 }

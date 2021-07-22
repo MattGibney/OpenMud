@@ -79,7 +79,7 @@ export default class PlayerModel {
   }
 
   sendMessage(message: string): void {
-    return this.connection.sendMessage(`${message}\n`);
+    return this.connection.sendMessage(message);
   }
 
   static createPlayer(
