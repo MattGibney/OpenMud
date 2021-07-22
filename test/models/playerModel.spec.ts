@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import sinon from 'sinon';
+import * as Sinon from 'sinon';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
@@ -23,7 +23,7 @@ describe('PlayerModel', function () {
         {}
       );
 
-      const currentRoomSpy = sinon.spy(player, 'currentRoom', ['get']);
+      const currentRoomSpy = Sinon.spy(player, 'currentRoom', ['get']);
 
       try {
         player.currentRoom;
@@ -31,7 +31,7 @@ describe('PlayerModel', function () {
         // Don't really care about this. We are asserting on the exception below.
       }
 
-      sinon.assert.threw(
+      Sinon.assert.threw(
         currentRoomSpy.get,
         'Player is in a room that does not exist!'
       );
@@ -70,18 +70,18 @@ describe('PlayerModel', function () {
         {}
       );
 
-      const stubSendMessage = sinon.stub(player, 'sendMessage');
+      const stubSendMessage = Sinon.stub(player, 'sendMessage');
 
       player.processCommand('TEST');
 
-      sinon.assert.calledWith(stubSendMessage, 'Command not recognised');
+      Sinon.assert.calledWith(stubSendMessage, 'Command not recognised');
     });
     it('should call the appropriate command when it exists', function () {
       const mockModelFactory = {} as ModelFactory;
       const mockDaoFactory = {} as DaoFactory;
       const mockConnection = {} as ConnectionModel;
       const mockGameInstance = {} as Game;
-      const testCommand = sinon.stub();
+      const testCommand = Sinon.stub();
       const player = new PlayerModel(
         mockModelFactory,
         mockDaoFactory,
@@ -92,12 +92,12 @@ describe('PlayerModel', function () {
         }
       );
 
-      const stubSendMessage = sinon.stub(player, 'sendMessage');
+      const stubSendMessage = Sinon.stub(player, 'sendMessage');
 
       player.processCommand('testCommand');
 
-      sinon.assert.notCalled(stubSendMessage);
-      sinon.assert.called(testCommand);
+      Sinon.assert.notCalled(stubSendMessage);
+      Sinon.assert.called(testCommand);
     });
   });
   describe('parseCommand', function () {
@@ -139,7 +139,7 @@ describe('PlayerModel', function () {
       const mockModelFactory = {} as ModelFactory;
       const mockDaoFactory = {} as DaoFactory;
 
-      const mockSendMessage = sinon.stub();
+      const mockSendMessage = Sinon.stub();
       const mockConnection = {
         sendMessage: mockSendMessage,
       } as unknown as ConnectionModel;
@@ -153,7 +153,7 @@ describe('PlayerModel', function () {
       );
 
       player.sendMessage('This is a test message');
-      sinon.assert.calledWith(mockSendMessage, 'This is a test message\n');
+      Sinon.assert.calledWith(mockSendMessage, 'This is a test message\n');
     });
   });
   describe('(static) createPlayer', function () {

@@ -55,11 +55,19 @@ export default class PlayerModel {
   processCommand(rawCommand: string): void {
     const command: ParsedCommand = this.parseCommand(rawCommand);
 
-    const commandFunction: CommandFunction =
-      this.commandFactory[command.instruction];
-    if (!commandFunction) {
+    // Validating the command factory actually has the command. This is
+    // validating user provided data. The Object.prototype route is also a
+    // securtity measure https://eslint.org/docs/rules/no-prototype-builtins
+    if (
+      !Object.prototype.hasOwnProperty.call(
+        this.commandFactory,
+        command.instruction
+      )
+    ) {
       return this.sendMessage('Command not recognised');
     }
+    const commandFunction: CommandFunction =
+      this.commandFactory[command.instruction];
     return commandFunction(this);
   }
 
