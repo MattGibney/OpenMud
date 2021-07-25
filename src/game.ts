@@ -1,3 +1,4 @@
+import pino from 'pino';
 import { CommandFactory } from './commandFactory';
 import DaoFactory from './daoFactory';
 import ModelFactory from './modelFactory';
@@ -16,31 +17,41 @@ export default class Game {
   private DaoFactory: DaoFactory;
   private connections: ConnectionModel[];
   private commandFactory: CommandFactory;
+  private logger: pino.Logger;
 
   public rooms: RoomModel[];
 
   constructor(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ) {
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
     this.commandFactory = commandFactory;
-    this.connections = [];
+    this.logger = logger;
 
+    this.connections = [];
     this.rooms = [];
   }
 
   initialise(): void {
+    this.logger.info('Initialising game instance');
+
+    this.logger.info('Setting up rooms');
     this.rooms = this.ModelFactory.room.fetchAllRooms(
       this.ModelFactory,
       this.DaoFactory,
       this
     );
+    this.logger.info(`Found ${this.rooms.length} rooms.`);
+
+    this.logger.info('Game ready');
   }
 
   get players(): PlayerModel[] {
+    this.logger.debug('Fetching players for authenticated connections');
     return this.connections
       .filter((connection) => connection.isAuthenitcated)
       .map((connection) => connection.player);
@@ -73,8 +84,11 @@ There is currently ${this.players.length} players online.
       this.DaoFactory,
       messageWriter,
       this,
-      this.commandFactory
+      this.commandFactory,
+      this.logger
     );
+
+    this.logger.info('New user connection established');
 
     newConnection.sendMessage(this.welcomeScreen);
 
@@ -86,6 +100,7 @@ There is currently ${this.players.length} players online.
   }
 
   closeConnection(connection: ConnectionModel): void {
+    this.logger.info('User disconnected');
     const index = this.connections.indexOf(connection);
     if (index > -1) {
       this.connections.splice(index, 1);

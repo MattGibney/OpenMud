@@ -6,6 +6,8 @@ import ModelFactory from '../../src/modelFactory';
 import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
+import createMockLogger from '../testHelpers/mockLogger';
+
 describe('PlayerModel', function () {
   describe('(get) currentRoom', function () {
     it('should throw an exception if the player is in a non-existant room', function () {
@@ -20,7 +22,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const currentRoomSpy = Sinon.spy(player, 'currentRoom', ['get']);
@@ -50,7 +53,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       assert.equal(player.currentRoom, mockRoom);
@@ -67,7 +71,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const stubSendMessage = Sinon.stub(player, 'sendMessage');
@@ -89,7 +94,8 @@ describe('PlayerModel', function () {
         mockGameInstance,
         {
           testCommand: testCommand,
-        }
+        },
+        createMockLogger()
       );
 
       const stubSendMessage = Sinon.stub(player, 'sendMessage');
@@ -111,7 +117,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const parsedCommand = player.parseCommand('Test Command');
@@ -127,7 +134,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const parsedCommand = player.parseCommand('TestCommand');
@@ -149,7 +157,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       player.sendMessage('This is a test message');
@@ -167,7 +176,8 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
       assert.instanceOf(player, PlayerModel);
     });

@@ -8,6 +8,7 @@ import commandFactory, {
 import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
+import pino from 'pino';
 
 export interface ParsedCommand {
   instruction: keyof typeof commandFactory;
@@ -18,24 +19,29 @@ export default class PlayerModel {
   private DaoFactory: DaoFactory;
   private connection: ConnectionModel;
   private commandFactory: CommandFactory;
-  private currentRoomId: number;
   public gameInstance: Game;
+  private logger: pino.Logger;
+
+  private currentRoomId: number;
+  public id: number;
 
   constructor(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ) {
+    this.id = 1;
+    this.currentRoomId = 1;
+
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
     this.connection = connection;
     this.gameInstance = gameInstance;
-
     this.commandFactory = commandFactory;
-
-    this.currentRoomId = 1;
+    this.logger = logger.child({ playerId: this.id });
   }
 
   get currentRoom(): RoomModel {
@@ -68,7 +74,7 @@ export default class PlayerModel {
     }
     const commandFunction: CommandFunction =
       this.commandFactory[command.instruction];
-    return commandFunction(this);
+    return commandFunction(this.logger, this);
   }
 
   parseCommand(rawCommand: string): ParsedCommand {
@@ -87,14 +93,16 @@ export default class PlayerModel {
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ): PlayerModel {
     return new PlayerModel(
       ModelFactory,
       DaoFactory,
       connection,
       gameInstance,
-      commandFactory
+      commandFactory,
+      logger
     );
   }
 }

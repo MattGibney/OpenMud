@@ -6,6 +6,8 @@ import DaoFactory from '../../src/daoFactory';
 import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
+import createMockLogger from '../testHelpers/mockLogger';
+
 describe('ConnectionModel', function () {
   describe('authenticatePlayer', function () {
     it('should set the player property to a PlayerModel instance', function () {
@@ -24,7 +26,8 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         Sinon.stub(),
         mockGameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       connection.authenticatePlayer();
@@ -51,7 +54,8 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const mockPlayerStubProcessCommand = Sinon.stub();
@@ -79,7 +83,8 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       const response = connection.clientInputHandler('This is a test');
@@ -99,7 +104,8 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {}
+        {},
+        createMockLogger()
       );
 
       connection.sendMessage('This is a test');
