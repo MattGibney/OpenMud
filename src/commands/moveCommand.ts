@@ -1,7 +1,13 @@
+import pino from 'pino';
+import { CommandFunction } from '../commandFactory';
 import PlayerModel from '../models/playerModel';
 import { RoomExitDirection } from '../models/roomModel';
 
-const moveInDirection = (player: PlayerModel, direction: RoomExitDirection) => {
+const moveInDirection = (
+  logger: pino.Logger,
+  player: PlayerModel,
+  direction: RoomExitDirection
+) => {
   const currentRoom = player.currentRoom;
   const directionExit = currentRoom.exits.find(
     (exit) => exit.direction === direction
@@ -14,29 +20,51 @@ const moveInDirection = (player: PlayerModel, direction: RoomExitDirection) => {
   if (!newRoom) {
     throw 'Room exit mapped to non existant room';
   }
+  logger.debug(
+    `Player ${player.id} moving from room ${currentRoom.id} to ${newRoom.id}`
+  );
   player.currentRoom = newRoom;
 
   // TODO: #11 Come up with a better way of chaining commands.
+  logger.debug('Executing look command after moving');
   player.processCommand('look');
 };
 
-const upCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'U');
+const upCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'U');
 };
-const downCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'D');
+const downCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'D');
 };
-const northCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'N');
+const northCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'N');
 };
-const eastCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'E');
+const eastCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'E');
 };
-const southCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'S');
+const southCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'S');
 };
-const westCommand = (player: PlayerModel): void => {
-  moveInDirection(player, 'W');
+const westCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  moveInDirection(logger, player, 'W');
 };
 
 export {

@@ -1,16 +1,13 @@
 import Game from '../game';
 import ConnectionModel from './connectionModel';
-
-import commandFactory, {
-  CommandFactory,
-  CommandFunction,
-} from '../commandFactory';
+import CommandFactory from '../commandFactory';
 import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
+import pino from 'pino';
 
 export interface ParsedCommand {
-  instruction: keyof typeof commandFactory;
+  instruction: string;
 }
 
 export default class PlayerModel {
@@ -18,24 +15,29 @@ export default class PlayerModel {
   private DaoFactory: DaoFactory;
   private connection: ConnectionModel;
   private commandFactory: CommandFactory;
-  private currentRoomId: number;
   public gameInstance: Game;
+  private logger: pino.Logger;
+
+  private currentRoomId: number;
+  public id: number;
 
   constructor(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ) {
+    this.id = 1;
+    this.currentRoomId = 1;
+
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
     this.connection = connection;
     this.gameInstance = gameInstance;
-
     this.commandFactory = commandFactory;
-
-    this.currentRoomId = 1;
+    this.logger = logger.child({ playerId: this.id });
   }
 
   get currentRoom(): RoomModel {
@@ -55,24 +57,17 @@ export default class PlayerModel {
   processCommand(rawCommand: string): void {
     const command: ParsedCommand = this.parseCommand(rawCommand);
 
-    // Validating the command factory actually has the command. This is
-    // validating user provided data. The Object.prototype route is also a
-    // securtity measure https://eslint.org/docs/rules/no-prototype-builtins
-    if (
-      !Object.prototype.hasOwnProperty.call(
-        this.commandFactory,
-        command.instruction
-      )
-    ) {
+    const commandFunction = this.commandFactory.getCommandFunction(
+      command.instruction
+    );
+    if (!commandFunction) {
       return this.sendMessage('Command not recognised');
     }
-    const commandFunction: CommandFunction =
-      this.commandFactory[command.instruction];
-    return commandFunction(this);
+    return commandFunction(this.logger, this);
   }
 
   parseCommand(rawCommand: string): ParsedCommand {
-    const instruction = rawCommand.split(' ')[0] as keyof typeof commandFactory;
+    const instruction = rawCommand.split(' ')[0];
     return {
       instruction: instruction,
     };
@@ -87,14 +82,16 @@ export default class PlayerModel {
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ): PlayerModel {
     return new PlayerModel(
       ModelFactory,
       DaoFactory,
       connection,
       gameInstance,
-      commandFactory
+      commandFactory,
+      logger
     );
   }
 }

@@ -1,4 +1,5 @@
-import { CommandFactory } from '../commandFactory';
+import pino from 'pino';
+import CommandFactory from '../commandFactory';
 import DaoFactory from '../daoFactory';
 import Game from '../game';
 import ModelFactory from '../modelFactory';
@@ -16,6 +17,7 @@ export default class ConnectionModel {
   private clientMessageWriter: MessageWriterFunction;
   private gameInstance: Game;
   private commandFactory: CommandFactory;
+  private logger: pino.Logger;
 
   public player!: PlayerModel;
 
@@ -24,13 +26,15 @@ export default class ConnectionModel {
     DaoFactory: DaoFactory,
     messageWriter: MessageWriterFunction,
     gameInstance: Game,
-    commandFactory: CommandFactory
+    commandFactory: CommandFactory,
+    logger: pino.Logger
   ) {
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
     this.clientMessageWriter = messageWriter;
     this.gameInstance = gameInstance;
     this.commandFactory = commandFactory;
+    this.logger = logger;
   }
 
   get isAuthenitcated(): boolean {
@@ -43,7 +47,8 @@ export default class ConnectionModel {
       this.DaoFactory,
       this,
       this.gameInstance,
-      this.commandFactory
+      this.commandFactory,
+      this.logger
     );
   }
 

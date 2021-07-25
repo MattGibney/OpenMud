@@ -1,10 +1,13 @@
-import Sinon from 'sinon';
+import * as Sinon from 'sinon';
+import CommandFactory from '../../src/commandFactory';
 import playerCountCommand from '../../src/commands/playerCountCommand';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
 import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
+
+import createMockLogger from '../testHelpers/mockLogger';
 
 describe('playerCountCommand', function () {
   it('sends a message to the player with a count of active players', function () {
@@ -14,18 +17,22 @@ describe('playerCountCommand', function () {
     const mockGameInstance = {
       players: [{}],
     } as Game;
+    const loggerDebugStub = Sinon.stub();
+    const mockLogger = createMockLogger(loggerDebugStub);
     const player = new PlayerModel(
       mockModelFactory,
       mockDaoFactory,
       mockConnection,
       mockGameInstance,
-      {}
+      {} as CommandFactory,
+      mockLogger
     );
 
     const stubSendMessage = Sinon.stub(player, 'sendMessage');
 
-    playerCountCommand(player);
+    playerCountCommand(mockLogger, player);
 
     Sinon.assert.calledWith(stubSendMessage, 'There are 1 players online');
+    Sinon.assert.calledWith(loggerDebugStub, 'Player Count Command');
   });
 });

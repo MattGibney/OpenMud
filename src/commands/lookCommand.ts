@@ -1,6 +1,12 @@
+import pino from 'pino';
+import { CommandFunction } from '../commandFactory';
 import PlayerModel from '../models/playerModel';
 
-export default (player: PlayerModel): void => {
+const lookCommand: CommandFunction = (
+  logger: pino.Logger,
+  player: PlayerModel
+): void => {
+  logger.debug('Look Command');
   const currentRoom = player.currentRoom;
   player.sendMessage(
     `${currentRoom.title}
@@ -11,3 +17,5 @@ There are ${currentRoom.playersInRoom.length} players here.
 Exits: ${currentRoom.exits.map((exit) => exit.direction)}`
   );
 };
+
+export default lookCommand;
