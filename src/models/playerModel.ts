@@ -61,7 +61,7 @@ export default class PlayerModel {
       command.instruction
     );
     if (!commandFunction) {
-      return this.sendMessage('BAD COMMAND');
+      return this.sendMessage('Command not recognised');
     }
     return commandFunction(this.logger, this);
   }

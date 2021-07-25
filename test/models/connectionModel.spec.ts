@@ -7,6 +7,7 @@ import ConnectionModel from '../../src/models/connectionModel';
 import PlayerModel from '../../src/models/playerModel';
 
 import createMockLogger from '../testHelpers/mockLogger';
+import CommandFactory from '../../src/commandFactory';
 
 describe('ConnectionModel', function () {
   describe('authenticatePlayer', function () {
@@ -26,7 +27,7 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         Sinon.stub(),
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -54,7 +55,7 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -83,7 +84,7 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -104,7 +105,7 @@ describe('ConnectionModel', function () {
         mockDaoFactory,
         mockMessageWriter,
         gameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 

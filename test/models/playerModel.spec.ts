@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import * as Sinon from 'sinon';
+import CommandFactory from '../../src/commandFactory';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
 import ModelFactory from '../../src/modelFactory';
@@ -22,7 +23,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -53,7 +54,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -71,7 +72,9 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {
+          getCommandFunction: Sinon.stub().returns(null),
+        } as CommandFactory,
         createMockLogger()
       );
 
@@ -93,8 +96,8 @@ describe('PlayerModel', function () {
         mockConnection,
         mockGameInstance,
         {
-          testCommand: testCommand,
-        },
+          getCommandFunction: Sinon.stub().returns(testCommand),
+        } as unknown as CommandFactory,
         createMockLogger()
       );
 
@@ -117,7 +120,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -134,7 +137,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -157,7 +160,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
 
@@ -176,7 +179,7 @@ describe('PlayerModel', function () {
         mockDaoFactory,
         mockConnection,
         mockGameInstance,
-        {},
+        {} as CommandFactory,
         createMockLogger()
       );
       assert.instanceOf(player, PlayerModel);
