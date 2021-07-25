@@ -1,4 +1,5 @@
 import * as Sinon from 'sinon';
+import CommandFactory from '../../src/commandFactory';
 import playerCountCommand from '../../src/commands/playerCountCommand';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
@@ -23,7 +24,7 @@ describe('playerCountCommand', function () {
       mockDaoFactory,
       mockConnection,
       mockGameInstance,
-      {},
+      {} as CommandFactory,
       mockLogger
     );
 

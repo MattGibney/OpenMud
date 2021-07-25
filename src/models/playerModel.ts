@@ -1,17 +1,13 @@
 import Game from '../game';
 import ConnectionModel from './connectionModel';
-
-import commandFactory, {
-  CommandFactory,
-  CommandFunction,
-} from '../commandFactory';
+import CommandFactory from '../commandFactory';
 import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
 import pino from 'pino';
 
 export interface ParsedCommand {
-  instruction: keyof typeof commandFactory;
+  instruction: string;
 }
 
 export default class PlayerModel {
@@ -61,24 +57,17 @@ export default class PlayerModel {
   processCommand(rawCommand: string): void {
     const command: ParsedCommand = this.parseCommand(rawCommand);
 
-    // Validating the command factory actually has the command. This is
-    // validating user provided data. The Object.prototype route is also a
-    // securtity measure https://eslint.org/docs/rules/no-prototype-builtins
-    if (
-      !Object.prototype.hasOwnProperty.call(
-        this.commandFactory,
-        command.instruction
-      )
-    ) {
-      return this.sendMessage('Command not recognised');
+    const commandFunction = this.commandFactory.getCommandFunction(
+      command.instruction
+    );
+    if (!commandFunction) {
+      return this.sendMessage('BAD COMMAND');
     }
-    const commandFunction: CommandFunction =
-      this.commandFactory[command.instruction];
     return commandFunction(this.logger, this);
   }
 
   parseCommand(rawCommand: string): ParsedCommand {
-    const instruction = rawCommand.split(' ')[0] as keyof typeof commandFactory;
+    const instruction = rawCommand.split(' ')[0];
     return {
       instruction: instruction,
     };

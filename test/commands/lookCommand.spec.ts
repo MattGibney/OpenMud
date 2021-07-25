@@ -1,4 +1,5 @@
 import * as Sinon from 'sinon';
+import CommandFactory from '../../src/commandFactory';
 import lookCommand from '../../src/commands/lookCommand';
 import DaoFactory from '../../src/daoFactory';
 import Game from '../../src/game';
@@ -24,7 +25,7 @@ describe('lookCommand', function () {
       mockDaoFactory,
       mockConnection,
       mockGameInstance,
-      {},
+      {} as CommandFactory,
       mockLogger
     );
 

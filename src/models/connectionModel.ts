@@ -1,5 +1,5 @@
 import pino from 'pino';
-import { CommandFactory } from '../commandFactory';
+import CommandFactory from '../commandFactory';
 import DaoFactory from '../daoFactory';
 import Game from '../game';
 import ModelFactory from '../modelFactory';
