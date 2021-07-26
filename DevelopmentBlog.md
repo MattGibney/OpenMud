@@ -5,6 +5,31 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## System Logging (Saturday 24th July 2020)
+
+Not a significant amout of development going on over the weekend but I managed
+to add some logging to the system. Log coverage is a little sparse at the moment
+but that's not really an issue with the system in such a large state of flux.
+I went with Pino for logging. I usually would go with Winston, but felt that
+this project would be a good opportunity to try out something a little
+different. At the moment, i'm not completely sure if Pino is the right choice or
+not, on paper, it should be totally fine though. I'll just have to wait and see.
+
+I previously activated CodeQL on the project in Github. It scans all Pull
+Requests and the develop branch for security vulnerabilities. When I first
+activated this, it flagged a potential security risk with the command execution
+code. I did implement a fix that would mitigate the issue however the analysis
+tool did not seem to recognise the fix I put in place. At the time I tested to
+make sure the vulnerability was patched and added a comment block to the code.
+Finally, I told Github it was mistaken and ignored the warning.
+
+When Adding logging code, I changed the system sufficiently enough that my
+acknowledgement was no longer honoured and it began to re-flag the false error.
+To get around this, I re-implemented the entire commandFactory. This actually
+turned out to be a good thing as the new solution is a lot nicer. It will give
+me a lot more control going forward over the way that commands work.
+
+
 ## Getting Testy & Daos (Wednesday 21st July 2021)
 
 In implementing the unit tests for the player model, i've refactored the way the
