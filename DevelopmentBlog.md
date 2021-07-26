@@ -5,6 +5,24 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Player Accounts (Monday 26th July 2020)
+
+This is a pretty big one. I'm writing this part ahead of doing any of the
+development work. The main challenges here will be differentiating between user
+inputs for an authenticated vs non-authenticated account and follong diverging
+code paths. I want to make sure that whatever I end up implementing won't have
+too dramatic of an impact on the way that the code works. It needs to be simple
+and maintainable after all. In the past, as part of previous projects, I have
+tried implementing this as a series of rooms that have custom behaviour. On the
+whole, the system does work. But it's really clumsy. It's also a strange user
+experience. For now, I plan to go with a more traditional approach.
+
+One of my considerations is to ensure that the authentication is kept seperate
+from the user interface. This is mainly because I want to have different methods
+of authentication in the future. I'd really like to explore the option of a
+magic link in the future for example where a QR code is rendered to the user and
+they can scan it with their phone to login.
+
 ## System Logging (Saturday 24th July 2020)
 
 Not a significant amout of development going on over the weekend but I managed
