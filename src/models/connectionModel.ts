@@ -3,6 +3,8 @@ import CommandFactory from '../commandFactory';
 import DaoFactory from '../daoFactory';
 import Game from '../game';
 import ModelFactory from '../modelFactory';
+import ScreenFactory from '../screenFactory';
+import AdventureScreen from '../screens/adventureScreen';
 import PlayerModel from './playerModel';
 
 /**
@@ -18,8 +20,10 @@ export default class ConnectionModel {
   private gameInstance: Game;
   private commandFactory: CommandFactory;
   private logger: pino.Logger;
+  private screenFactory: ScreenFactory;
 
   public player!: PlayerModel;
+  public currentScreen!: AdventureScreen;
 
   constructor(
     ModelFactory: ModelFactory,
@@ -27,7 +31,8 @@ export default class ConnectionModel {
     messageWriter: MessageWriterFunction,
     gameInstance: Game,
     commandFactory: CommandFactory,
-    logger: pino.Logger
+    logger: pino.Logger,
+    screenFactory: ScreenFactory
   ) {
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
@@ -35,6 +40,16 @@ export default class ConnectionModel {
     this.gameInstance = gameInstance;
     this.commandFactory = commandFactory;
     this.logger = logger;
+    this.screenFactory = screenFactory;
+
+    // Shortcut, auth player
+    this.authenticatePlayer(1);
+
+    this.currentScreen = new screenFactory.adventure(
+      this,
+      this.commandFactory,
+      this.logger
+    );
   }
 
   get isAuthenitcated(): boolean {
@@ -58,13 +73,14 @@ export default class ConnectionModel {
 
   clientInputHandler(data: string): void {
     // this.sendMessage('RESPONSE!' + data);
-    if (this.isAuthenitcated) {
-      return this.player.processCommand(data);
-    }
+    // if (this.isAuthenitcated) {
+    //   return this.player.processCommand(data);
+    // }
 
-    // TODO: Implement auth handler
-    this.logger.debug('Not Authed');
-    return undefined;
+    // // TODO: Implement auth handler
+    // this.logger.debug('Not Authed');
+    // return undefined;
+    this.currentScreen.processCommand(data);
   }
 
   sendMessage(message: string): void {

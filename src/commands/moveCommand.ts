@@ -26,8 +26,8 @@ const moveInDirection = (
   player.currentRoom = newRoom;
 
   // TODO: #11 Come up with a better way of chaining commands.
-  logger.debug('Executing look command after moving');
-  player.processCommand('look');
+  // logger.debug('Executing look command after moving');
+  // player.processCommand('look');
 };
 
 const upCommand: CommandFunction = (

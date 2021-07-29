@@ -4,7 +4,6 @@ import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
 import Game from './game';
 import telnet from './networking/telnetServer';
-import CommandFactory from './commandFactory';
 import environment from '../config/environment';
 
 const logger = pino({
@@ -13,8 +12,7 @@ const logger = pino({
 
 const modelFactory = new ModelFactory();
 const daoFactory = new DaoFactory();
-const commandFactory = new CommandFactory();
-const game = new Game(modelFactory, daoFactory, commandFactory, logger);
+const game = new Game(modelFactory, daoFactory, logger);
 
 game.initialise();
 

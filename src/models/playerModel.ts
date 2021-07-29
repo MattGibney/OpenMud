@@ -7,10 +7,6 @@ import RoomModel from './roomModel';
 import pino from 'pino';
 import { PlayerData } from '../daos/playerDao';
 
-export interface ParsedCommand {
-  instruction: string;
-}
-
 export default class PlayerModel {
   private ModelFactory: ModelFactory;
   private DaoFactory: DaoFactory;
@@ -56,24 +52,24 @@ export default class PlayerModel {
     this.currentRoomId = room.id;
   }
 
-  processCommand(rawCommand: string): void {
-    const command: ParsedCommand = this.parseCommand(rawCommand);
+  // processCommand(rawCommand: string): void {
+  //   const command: ParsedCommand = this.parseCommand(rawCommand);
 
-    const commandFunction = this.commandFactory.getCommandFunction(
-      command.instruction
-    );
-    if (!commandFunction) {
-      return this.sendMessage('Command not recognised');
-    }
-    return commandFunction(this.logger, this);
-  }
+  //   const commandFunction = this.commandFactory.getCommandFunction(
+  //     command.instruction
+  //   );
+  //   if (!commandFunction) {
+  //     return this.sendMessage('Command not recognised');
+  //   }
+  //   return commandFunction(this.logger, this);
+  // }
 
-  parseCommand(rawCommand: string): ParsedCommand {
-    const instruction = rawCommand.split(' ')[0];
-    return {
-      instruction: instruction,
-    };
-  }
+  // parseCommand(rawCommand: string): ParsedCommand {
+  //   const instruction = rawCommand.split(' ')[0];
+  //   return {
+  //     instruction: instruction,
+  //   };
+  // }
 
   sendMessage(message: string): void {
     return this.connection.sendMessage(message);
