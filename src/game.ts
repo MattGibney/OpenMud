@@ -92,9 +92,6 @@ There is currently ${this.players.length} players online.
 
     newConnection.sendMessage(this.welcomeScreen);
 
-    // Auto authenticating as players currently have no state
-    newConnection.authenticatePlayer();
-
     this.connections.push(newConnection);
     return newConnection;
   }

@@ -41,15 +41,19 @@ export default class ConnectionModel {
     return !!this.player;
   }
 
-  authenticatePlayer(): void {
-    this.player = this.ModelFactory.player.createPlayer(
+  authenticatePlayer(playerId: number): void {
+    const player = this.ModelFactory.player.fetchPlayerById(
       this.ModelFactory,
       this.DaoFactory,
       this,
       this.gameInstance,
       this.commandFactory,
-      this.logger
+      this.logger,
+      playerId
     );
+    if (player) {
+      this.player = player;
+    }
   }
 
   clientInputHandler(data: string): void {
@@ -59,6 +63,7 @@ export default class ConnectionModel {
     }
 
     // TODO: Implement auth handler
+    this.logger.debug('Not Authed');
     return undefined;
   }
 

@@ -5,6 +5,7 @@ import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
 import pino from 'pino';
+import { PlayerData } from '../daos/playerDao';
 
 export interface ParsedCommand {
   instruction: string;
@@ -27,10 +28,11 @@ export default class PlayerModel {
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory,
-    logger: pino.Logger
+    logger: pino.Logger,
+    playerData: PlayerData
   ) {
-    this.id = 1;
-    this.currentRoomId = 1;
+    this.id = playerData.id;
+    this.currentRoomId = playerData.currentRoomId;
 
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
@@ -77,21 +79,26 @@ export default class PlayerModel {
     return this.connection.sendMessage(message);
   }
 
-  static createPlayer(
+  static fetchPlayerById(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory,
-    logger: pino.Logger
-  ): PlayerModel {
+    logger: pino.Logger,
+    playerId: number
+  ): PlayerModel | null {
+    const playerData = DaoFactory.player.fetchPlayerById(playerId);
+    if (!playerData) return null;
+
     return new PlayerModel(
       ModelFactory,
       DaoFactory,
       connection,
       gameInstance,
       commandFactory,
-      logger
+      logger,
+      playerData
     );
   }
 }
