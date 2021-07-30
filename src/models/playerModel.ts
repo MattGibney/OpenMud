@@ -52,39 +52,20 @@ export default class PlayerModel {
     this.currentRoomId = room.id;
   }
 
-  // processCommand(rawCommand: string): void {
-  //   const command: ParsedCommand = this.parseCommand(rawCommand);
-
-  //   const commandFunction = this.commandFactory.getCommandFunction(
-  //     command.instruction
-  //   );
-  //   if (!commandFunction) {
-  //     return this.sendMessage('Command not recognised');
-  //   }
-  //   return commandFunction(this.logger, this);
-  // }
-
-  // parseCommand(rawCommand: string): ParsedCommand {
-  //   const instruction = rawCommand.split(' ')[0];
-  //   return {
-  //     instruction: instruction,
-  //   };
-  // }
-
   sendMessage(message: string): void {
     return this.connection.sendMessage(message);
   }
 
-  static fetchPlayerById(
+  static fetchPlayerByUsername(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory,
     logger: pino.Logger,
-    playerId: number
+    username: string
   ): PlayerModel | null {
-    const playerData = DaoFactory.player.fetchPlayerById(playerId);
+    const playerData = DaoFactory.player.fetchPlayerByUsername(username);
     if (!playerData) return null;
 
     return new PlayerModel(

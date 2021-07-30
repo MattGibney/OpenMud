@@ -1,34 +1,36 @@
 import pino from 'pino';
 import CommandFactory from '../commandFactory';
 import ConnectionModel from '../models/connectionModel';
+import BaseScreen from './baseScreen';
 
 export interface ParsedCommand {
   instruction: string;
 }
 
-export default class AdventureScreen {
-  private connection: ConnectionModel;
+export default class AdventureScreen extends BaseScreen {
   private commandFactory: CommandFactory;
-  private logger: pino.Logger;
 
   constructor(
     connectionModel: ConnectionModel,
-    commandFactory: CommandFactory,
-    logger: pino.Logger
+    logger: pino.Logger,
+    commandFactory: CommandFactory
   ) {
-    this.connection = connectionModel;
+    super(connectionModel, logger);
     this.commandFactory = commandFactory;
-    this.logger = logger;
   }
 
-  processCommand(rawCommand: string): void {
+  inputHandler(data: string): void {
+    this.processInput(data);
+  }
+
+  processInput(rawCommand: string): void {
     const command: ParsedCommand = this.parseCommand(rawCommand);
 
     const commandFunction = this.commandFactory.getCommandFunction(
       command.instruction
     );
     if (!commandFunction) {
-      return this.sendMessage('Command not recognised');
+      return this.connection.sendMessage('Command not recognised');
     }
     return commandFunction(this.logger, this.connection.player);
   }
@@ -38,9 +40,5 @@ export default class AdventureScreen {
     return {
       instruction: instruction,
     };
-  }
-
-  sendMessage(message: string): void {
-    return this.connection.sendMessage(message);
   }
 }
