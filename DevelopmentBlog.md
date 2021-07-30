@@ -5,6 +5,31 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Authentication
+
+Work is underway for adding authentication to the game. I haven't had as much
+time to work on this as I would have liked recently but it's given me a chance
+to think over this a fair bit at least. I am still pretty sure that there are
+going to be a few more large refactors over the next couple of feature additions
+but I do feel like i am slowly getting toward the point where the codebase is
+logical and extensible. My biggest trap to avoid now is making the code too
+generic; After all, i am don't intend this codebase to be an engine that is used
+to make games, in stead it is meant to be a game itself. I am certain that this
+could be broken up into an engine and some game logic, but that can come later.
+For now the main focus will continue to be the desire to create a game that is
+fun to play.
+
+I have begun talks with a possible partner to work on game design for this. I
+will happily admit that for me, this project is much more about building the
+game rather than having something to play at the end. This fact, combined with
+the fact that I have no experience in game design means that the end product is
+very likely to be pretty terrible. As such, I feel like partnering up with a
+game designer will be a really good idea to make sure that this game is
+something fun to play once all is said and done. I don't yet know if things will
+work out with this person but I am hopeful. If things don't work out with this
+person, i'll start looking again for someone else to help me out with this
+project.
+
 ## Screens (Thursday 29th July 2021)
 
 I've begun the process of introducing the concept of screens. The basic idea
