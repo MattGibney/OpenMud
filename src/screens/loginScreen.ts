@@ -34,8 +34,6 @@ const ScreenPages: ScreenPage[] = [
       }
       if (data === 'login') {
         screen.setScreenPage('input-username');
-      } else if (data === 'register') {
-        screen.setScreenPage('register');
       }
     },
   },
@@ -52,11 +50,11 @@ const ScreenPages: ScreenPage[] = [
     id: 'input-password',
     initialText: '\nPassword:',
     inputType: 'FREETEXT',
-    inputHandler(data: string, screen: LoginScreen) {
+    async inputHandler(data: string, screen: LoginScreen) {
       const username = screen.username;
       const password = data;
 
-      const didLogin = screen.connectionInstance.authenticatePlayer(
+      const didLogin = await screen.connectionInstance.authenticatePlayer(
         username,
         password
       );

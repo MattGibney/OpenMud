@@ -5,6 +5,7 @@ import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
 import pino from 'pino';
+import bcrypt from 'bcrypt';
 import { PlayerData } from '../daos/playerDao';
 
 export default class PlayerModel {
@@ -17,6 +18,8 @@ export default class PlayerModel {
 
   private currentRoomId: number;
   public id: number;
+  public username: string;
+  private passwordHash: string;
 
   constructor(
     ModelFactory: ModelFactory,
@@ -29,6 +32,8 @@ export default class PlayerModel {
   ) {
     this.id = playerData.id;
     this.currentRoomId = playerData.currentRoomId;
+    this.username = playerData.username;
+    this.passwordHash = playerData.password;
 
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
@@ -50,6 +55,10 @@ export default class PlayerModel {
 
   set currentRoom(room: RoomModel) {
     this.currentRoomId = room.id;
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.passwordHash);
   }
 
   sendMessage(message: string): void {

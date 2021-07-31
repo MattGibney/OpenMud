@@ -10,7 +10,7 @@ const mockPlayerData: PlayerData[] = [
     id: 1,
     currentRoomId: 1,
     username: 'Moppler',
-    password: '',
+    password: '$2b$10$Aj6mo99Q1tsUuZ3yER5u7.Tl9rnbW9314iQNEK/kGRcS24oB58PLK',
   },
 ];
 

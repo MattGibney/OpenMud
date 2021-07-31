@@ -53,7 +53,10 @@ export default class ConnectionModel {
     return !!this.player;
   }
 
-  authenticatePlayer(username: string, password: string): boolean {
+  async authenticatePlayer(
+    username: string,
+    password: string
+  ): Promise<boolean> {
     const player = this.ModelFactory.player.fetchPlayerByUsername(
       this.ModelFactory,
       this.DaoFactory,
@@ -64,9 +67,11 @@ export default class ConnectionModel {
       username
     );
     if (player) {
-      // TODO: Validate password
-      this.player = player;
-      return true;
+      const passwordIsValid = await player.validatePassword(password);
+      if (passwordIsValid) {
+        this.player = player;
+        return true;
+      }
     }
     return false;
   }
