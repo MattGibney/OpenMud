@@ -5,10 +5,8 @@ import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
 import pino from 'pino';
-
-export interface ParsedCommand {
-  instruction: string;
-}
+import bcrypt from 'bcrypt';
+import { PlayerData } from '../daos/playerDao';
 
 export default class PlayerModel {
   private ModelFactory: ModelFactory;
@@ -20,6 +18,8 @@ export default class PlayerModel {
 
   private currentRoomId: number;
   public id: number;
+  public username: string;
+  private passwordHash: string;
 
   constructor(
     ModelFactory: ModelFactory,
@@ -27,10 +27,13 @@ export default class PlayerModel {
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory,
-    logger: pino.Logger
+    logger: pino.Logger,
+    playerData: PlayerData
   ) {
-    this.id = 1;
-    this.currentRoomId = 1;
+    this.id = playerData.id;
+    this.currentRoomId = playerData.currentRoomId;
+    this.username = playerData.username;
+    this.passwordHash = playerData.password;
 
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
@@ -54,44 +57,34 @@ export default class PlayerModel {
     this.currentRoomId = room.id;
   }
 
-  processCommand(rawCommand: string): void {
-    const command: ParsedCommand = this.parseCommand(rawCommand);
-
-    const commandFunction = this.commandFactory.getCommandFunction(
-      command.instruction
-    );
-    if (!commandFunction) {
-      return this.sendMessage('Command not recognised');
-    }
-    return commandFunction(this.logger, this);
-  }
-
-  parseCommand(rawCommand: string): ParsedCommand {
-    const instruction = rawCommand.split(' ')[0];
-    return {
-      instruction: instruction,
-    };
+  async validatePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.passwordHash);
   }
 
   sendMessage(message: string): void {
     return this.connection.sendMessage(message);
   }
 
-  static createPlayer(
+  static fetchPlayerByUsername(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
     connection: ConnectionModel,
     gameInstance: Game,
     commandFactory: CommandFactory,
-    logger: pino.Logger
-  ): PlayerModel {
+    logger: pino.Logger,
+    username: string
+  ): PlayerModel | null {
+    const playerData = DaoFactory.player.fetchPlayerByUsername(username);
+    if (!playerData) return null;
+
     return new PlayerModel(
       ModelFactory,
       DaoFactory,
       connection,
       gameInstance,
       commandFactory,
-      logger
+      logger,
+      playerData
     );
   }
 }

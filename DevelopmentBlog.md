@@ -5,7 +5,68 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
-## System Logging (Saturday 24th July 2020)
+## Authentication
+
+Work is underway for adding authentication to the game. I haven't had as much
+time to work on this as I would have liked recently but it's given me a chance
+to think over this a fair bit at least. I am still pretty sure that there are
+going to be a few more large refactors over the next couple of feature additions
+but I do feel like i am slowly getting toward the point where the codebase is
+logical and extensible. My biggest trap to avoid now is making the code too
+generic; After all, i am don't intend this codebase to be an engine that is used
+to make games, in stead it is meant to be a game itself. I am certain that this
+could be broken up into an engine and some game logic, but that can come later.
+For now the main focus will continue to be the desire to create a game that is
+fun to play.
+
+I have begun talks with a possible partner to work on game design for this. I
+will happily admit that for me, this project is much more about building the
+game rather than having something to play at the end. This fact, combined with
+the fact that I have no experience in game design means that the end product is
+very likely to be pretty terrible. As such, I feel like partnering up with a
+game designer will be a really good idea to make sure that this game is
+something fun to play once all is said and done. I don't yet know if things will
+work out with this person but I am hopeful. If things don't work out with this
+person, i'll start looking again for someone else to help me out with this
+project.
+
+## Screens (Thursday 29th July 2021)
+
+I've begun the process of introducing the concept of screens. The basic idea
+behind this is to work in a similar way to routes in a more traditional web app.
+We effectively establish a context to work in, a screen, and then process
+commands within that context. Screens allow us to have context specific commands
+and functionality. As I write this, the code is in a pretty big mess with a fair
+amount of hacking to make things work, but that's all part of the development
+process.
+
+Up until now, commands have been running in the context of a player, but this
+isn't always the case. The first think that a user will do when connecting is
+either register an account or login to an existing one. Until this has happened,
+there isn't a player at all. I would have benefited from thinking a little more
+about this before I began initial development, but that's ok. This is all part
+of the fun after all. I'm pretty confident that almost all of my tests will need
+to be re-written though, oh well.
+
+## Player Accounts (Monday 26th July 2021)
+
+This is a pretty big one. I'm writing this part ahead of doing any of the
+development work. The main challenges here will be differentiating between user
+inputs for an authenticated vs non-authenticated account and follong diverging
+code paths. I want to make sure that whatever I end up implementing won't have
+too dramatic of an impact on the way that the code works. It needs to be simple
+and maintainable after all. In the past, as part of previous projects, I have
+tried implementing this as a series of rooms that have custom behaviour. On the
+whole, the system does work. But it's really clumsy. It's also a strange user
+experience. For now, I plan to go with a more traditional approach.
+
+One of my considerations is to ensure that the authentication is kept seperate
+from the user interface. This is mainly because I want to have different methods
+of authentication in the future. I'd really like to explore the option of a
+magic link in the future for example where a QR code is rendered to the user and
+they can scan it with their phone to login.
+
+## System Logging (Saturday 24th July 2021)
 
 Not a significant amout of development going on over the weekend but I managed
 to add some logging to the system. Log coverage is a little sparse at the moment
@@ -28,7 +89,6 @@ acknowledgement was no longer honoured and it began to re-flag the false error.
 To get around this, I re-implemented the entire commandFactory. This actually
 turned out to be a good thing as the new solution is a lot nicer. It will give
 me a lot more control going forward over the way that commands work.
-
 
 ## Getting Testy & Daos (Wednesday 21st July 2021)
 

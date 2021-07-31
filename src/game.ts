@@ -7,6 +7,7 @@ import ConnectionModel, {
 } from './models/connectionModel';
 import PlayerModel from './models/playerModel';
 import RoomModel from './models/roomModel';
+import ScreenFactory from './screenFactory';
 
 /**
  * This class represents the actual running game. It's responsible for managing
@@ -17,6 +18,7 @@ export default class Game {
   private DaoFactory: DaoFactory;
   private connections: ConnectionModel[];
   private commandFactory: CommandFactory;
+  private screenFactory: ScreenFactory;
   private logger: pino.Logger;
 
   public rooms: RoomModel[];
@@ -24,12 +26,12 @@ export default class Game {
   constructor(
     ModelFactory: ModelFactory,
     DaoFactory: DaoFactory,
-    commandFactory: CommandFactory,
     logger: pino.Logger
   ) {
     this.ModelFactory = ModelFactory;
     this.DaoFactory = DaoFactory;
-    this.commandFactory = commandFactory;
+    this.commandFactory = new CommandFactory();
+    this.screenFactory = new ScreenFactory();
     this.logger = logger;
 
     this.connections = [];
@@ -57,27 +59,6 @@ export default class Game {
       .map((connection) => connection.player);
   }
 
-  get welcomeScreen(): string {
-    return String.raw`
-Welcome to Open Mud
-
-                  / )
-  (\__/)         ( (
-  )    (          ) )
-={      }=       / /
-  )     '-------/ /
-  (               /
-  \              |
-  ,'\       ,    ,'
-  '-'\  ,---\   | \
-    _) )    '. \ /
-    (__/       ) )
-              (_/
-
-There is currently ${this.players.length} players online.
-`;
-  }
-
   createConnection(messageWriter: MessageWriterFunction): ConnectionModel {
     const newConnection = new this.ModelFactory.connection(
       this.ModelFactory,
@@ -85,15 +66,11 @@ There is currently ${this.players.length} players online.
       messageWriter,
       this,
       this.commandFactory,
-      this.logger
+      this.logger,
+      this.screenFactory
     );
 
     this.logger.info('New user connection established');
-
-    newConnection.sendMessage(this.welcomeScreen);
-
-    // Auto authenticating as players currently have no state
-    newConnection.authenticatePlayer();
 
     this.connections.push(newConnection);
     return newConnection;
