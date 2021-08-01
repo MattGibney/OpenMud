@@ -4,7 +4,7 @@ import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
 import Game from './game';
 import telnet from './networking/telnetServer';
-import environment from '../config/environment';
+import environment from '../environments/environment';
 
 const logger = pino({
   level: 'debug',

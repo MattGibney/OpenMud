@@ -1,4 +1,4 @@
-import Config from '../config/environment';
+import Config from '../../apps/game-server/src/environments/environment';
 
 import chalk from 'chalk';
 import bcrypt from 'bcrypt';
