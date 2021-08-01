@@ -1,4 +1,4 @@
-import pino from 'pino';
+import * as pino from 'pino';
 import CommandFactory from '../commandFactory';
 import ConnectionModel from '../models/connectionModel';
 import BaseScreen from './baseScreen';

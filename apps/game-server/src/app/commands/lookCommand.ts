@@ -1,4 +1,4 @@
-import pino from 'pino';
+import * as pino from 'pino';
 import { CommandFunction } from '../commandFactory';
 import PlayerModel from '../models/playerModel';
 

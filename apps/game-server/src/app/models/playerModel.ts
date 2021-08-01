@@ -4,8 +4,8 @@ import CommandFactory from '../commandFactory';
 import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
-import pino from 'pino';
-import bcrypt from 'bcrypt';
+import * as pino from 'pino';
+import * as bcrypt from 'bcrypt';
 import { PlayerData } from '../daos/playerDao';
 
 export default class PlayerModel {

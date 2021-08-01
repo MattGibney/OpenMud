@@ -1,4 +1,4 @@
-import pino from 'pino';
+import * as pino from 'pino';
 
 import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';

@@ -1,4 +1,4 @@
-import pino from 'pino';
+import * as pino from 'pino';
 import ConnectionModel from '../models/connectionModel';
 
 export default class BaseScreen {
