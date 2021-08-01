@@ -5,6 +5,16 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## Migration to NX (Sunday 1st August 2021)
+
+I have decided to migrate the application to use the NX.dev workspace
+environemnt. This is largely about future proofing at the moment and the vast
+majority of the perceived benefits that come from such a migration are not used
+at the moment. This mover however signifies my continued efforts to make this
+into a project that I can get stuck into for a long time to come. I will likely
+start to build additiona conponents into this repository over the coming weeks.
+The first of which is probably going to be a browser based UI.
+
 ## Some more thoughts on the screens concept (Sunday 1st August 2021)
 
 I have finally completed my work to introduce the concept of screens. This is
