@@ -54,7 +54,7 @@ npx nx build game-server --prod
 echo "Creating Tarball"
 cd dist/apps/game-server
 tar -zcf "../../../builds/openmud-$PACKAGE_VERSION.tar.gz" .
-cd ..
+cd ../../..
 
 echo "Cleaning temporary files"
 rm -r dist/
