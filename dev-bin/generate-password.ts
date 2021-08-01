@@ -1,4 +1,4 @@
-import Config from '../../apps/game-server/src/environments/environment';
+import Config from '../apps/game-server/src/environments/environment';
 
 import * as chalk from 'chalk';
 import * as bcrypt from 'bcrypt';

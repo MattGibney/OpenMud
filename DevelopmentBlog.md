@@ -15,6 +15,24 @@ into a project that I can get stuck into for a long time to come. I will likely
 start to build additiona conponents into this repository over the coming weeks.
 The first of which is probably going to be a browser based UI.
 
+The migration process was pretty painless. The migration guide on the NX website
+only really mentions Angular or React migration, but the process was pretty
+painless. I began by creating a new NX workspace in a sub folder. I then moved
+files into a new application within the workspace. When moving files, I was sure
+to use the `git mv` command so that commit history was retained. It wouldn't be
+very fun if I lost my commit history on the files I've been workin on so far.
+
+The only casualty from the migration was the tests. NX uses Jest for it's
+testing, mocking and assertions. I was previously using a combination of Mocha,
+Sinon, and Chai. I have migrated tests in the past, there is even a handy
+codemod these days to auto migrate the tests. I chose not to do this however. I
+have just completed a fairly major refactor of the entire codebase and a large
+number of the tests were broken anyway. This is a good opportunity to go through
+the application again and ensure that there is adequate coverage. This will also
+give me a great chance to go through the code an ensure that ther is adequate
+logging and documentation. (I know there isn't, so it'll be good to get that
+sorted).
+
 ## Some more thoughts on the screens concept (Sunday 1st August 2021)
 
 I have finally completed my work to introduce the concept of screens. This is
