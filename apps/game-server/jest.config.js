@@ -12,4 +12,10 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/game-server',
+  coverageReporters: ['lcov'],
+  collectCoverageFrom: [
+    "**/src/**/*.ts",
+    "!**/node_modules/**"
+  ],
+  collectCoverage: true
 };
