@@ -5,7 +5,19 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
-## Authentication
+## Some more thoughts on the screens concept (Sunday 1st August 2021)
+
+I have finally completed my work to introduce the concept of screens. This is
+mainly used right now for the authentication part, where the user is guided
+through a series of steps to provide enough information to initiate
+authentication. The system works, especially for the simple interface over a
+telnet client. I am starting to think however that perhaps the screens
+themselves should be a part of the telnet client, rather than an integral part
+of the engine. For now, i'll leave things as they are, but as I start to explore
+alternative user interfaces, such as a web or mobile client, I'll probably need
+to take another look at this and see if I want to re-think it yet again.
+
+## Authentication (Saturday 31st July 2021)
 
 Work is underway for adding authentication to the game. I haven't had as much
 time to work on this as I would have liked recently but it's given me a chance
