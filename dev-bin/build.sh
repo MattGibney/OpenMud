@@ -48,8 +48,8 @@ mkdir -p builds
 echo "Compiling application"
 npx nx build game-server --prod
 
-# echo "Copying additionally required files"
-# cp package.json package-lock.json ecosystem.json dist/
+echo "Copying additionally required files"
+cp package.json package-lock.json dist/apps/game-server
 
 echo "Creating Tarball"
 cd dist/apps/game-server
