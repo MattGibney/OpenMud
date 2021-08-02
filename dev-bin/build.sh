@@ -46,15 +46,15 @@ rm -rf dist/
 mkdir -p builds
 
 echo "Compiling application"
-npx tsc
+npx nx build game-server --prod
 
 echo "Copying additionally required files"
-cp package.json package-lock.json ecosystem.json dist/
+cp package.json package-lock.json dist/apps/game-server
 
 echo "Creating Tarball"
-cd dist
-tar -zcf "../builds/openmud-$PACKAGE_VERSION.tar.gz" .
-cd ..
+cd dist/apps/game-server
+tar -zcf "../../../builds/openmud-$PACKAGE_VERSION.tar.gz" .
+cd ../../..
 
 echo "Cleaning temporary files"
 rm -r dist/

@@ -1,21 +1,35 @@
 {
   "root": true,
-  "env": {
-    "es6": true,
-    "node": true,
-    "mocha": true
-  },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2020
-  },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  "plugins": ["@typescript-eslint", "prettier"],
-  "rules": {
-    "no-console": "off",
-    "quotes": [2, "single"],
-    "prettier/prettier": "error"
-  },
-  "ignorePatterns": "dist/**/*"
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    }
+  ]
 }

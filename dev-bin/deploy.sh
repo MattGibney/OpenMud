@@ -53,5 +53,5 @@ silentSsh "$REMOTE_CONNECTION" <<EOC
   cd ../
 
   echo "Restarting PM2 process"
-  pm2 -s startOrRestart current/ecosystem.json
+  pm2 -s startOrRestart current/assets/ecosystem.json
 EOC

@@ -1,7 +1,7 @@
-import Config from '../config/environment';
+import Config from '../apps/game-server/src/environments/environment';
 
-import chalk from 'chalk';
-import bcrypt from 'bcrypt';
+import * as chalk from 'chalk';
+import * as bcrypt from 'bcrypt';
 
 (async () => {
   const password = process.argv.slice(2)[0];

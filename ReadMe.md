@@ -15,7 +15,7 @@ Running the application:
 
 1. Clone Repo
 2. Install deps `npm i`
-3. run `npm start`
+3. run `nx serve game-server`
 
 Running tests:
 
