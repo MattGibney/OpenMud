@@ -14,6 +14,8 @@ import PlayerModel from './playerModel';
  */
 export type MessageWriterFunction = (message: string) => void;
 
+export type RenderMode = 'TEXT' | 'JSON';
+
 export default class ConnectionModel {
   private ModelFactory: ModelFactory;
   private DaoFactory: DaoFactory;
@@ -22,6 +24,8 @@ export default class ConnectionModel {
   private commandFactory: CommandFactory;
   private logger: pino.Logger;
   private screenFactory: ScreenFactory;
+
+  public renderMode: RenderMode;
 
   public player!: PlayerModel;
   public currentScreen!: AdventureScreen | LoginScreen;
@@ -42,6 +46,8 @@ export default class ConnectionModel {
     this.commandFactory = commandFactory;
     this.logger = logger;
     this.screenFactory = screenFactory;
+
+    this.renderMode = 'TEXT';
 
     // Shortcut, auth player
     // this.authenticatePlayer(1);

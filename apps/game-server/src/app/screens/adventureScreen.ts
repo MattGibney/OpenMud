@@ -32,7 +32,7 @@ export default class AdventureScreen extends BaseScreen {
     if (!commandFunction) {
       return this.connection.sendMessage('Command not recognised');
     }
-    return commandFunction(this.logger, this.connection.player);
+    this.connection.player.executeCommand(commandFunction);
   }
 
   parseCommand(rawCommand: string): ParsedCommand {

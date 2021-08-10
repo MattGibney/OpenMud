@@ -1,6 +1,6 @@
 import Game from '../game';
 import ConnectionModel from './connectionModel';
-import CommandFactory from '../commandFactory';
+import CommandFactory, { CommandFunction } from '../commandFactory';
 import ModelFactory from '../modelFactory';
 import DaoFactory from '../daoFactory';
 import RoomModel from './roomModel';
@@ -61,8 +61,14 @@ export default class PlayerModel {
     return await bcrypt.compare(password, this.passwordHash);
   }
 
+  executeCommand(command: CommandFunction) {
+    command(this.logger, this, this.connection.renderMode);
+  }
+
   sendMessage(message: string): void {
-    return this.connection.sendMessage(message);
+    // TODO: Replace this when supporting return types other than strings
+    const messageAsString = message.toString();
+    return this.connection.sendMessage(messageAsString);
   }
 
   static fetchPlayerByUsername(

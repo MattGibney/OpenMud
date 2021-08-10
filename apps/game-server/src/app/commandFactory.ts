@@ -9,11 +9,13 @@ import {
   westCommand,
 } from './commands/moveCommand';
 import playerCountCommand from './commands/playerCountCommand';
+import { RenderMode } from './models/connectionModel';
 import PlayerModel from './models/playerModel';
 
 export type CommandFunction = (
   logger: pino.Logger,
-  player: PlayerModel
+  player: PlayerModel,
+  renderMode: RenderMode
 ) => void;
 
 const commands = new Map();

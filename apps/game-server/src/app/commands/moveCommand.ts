@@ -74,4 +74,6 @@ export {
   eastCommand,
   southCommand,
   westCommand,
+
+  moveInDirection
 };
