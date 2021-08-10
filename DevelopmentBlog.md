@@ -5,6 +5,38 @@ multi player adventure game. Players can work alone or as part of a group to go
 on grand adventures, epic quests, grind out skills or work together to acheive
 something entirelly new.
 
+## An update on development (Tuesday 10th August 2021)
+
+Development has certainly slowed somewhat over the past week or so, this isn't
+for lack of want however, I just have to juggle this project with both my day
+job and my family life. While development has been a little slower than I would
+like, I have had a good opportunity to think about the ptroject and about the
+architecture of the code.
+
+I spend a fair amount of time working on adding in the concept of screens. The
+general idea of this was to provide a way to handle serial user inputs for
+things like the login or registration screen. This has been somewhat sucessful,
+however I have now realised that I've painted myself into a bit of a corner with
+it. My general idea behind this project is that I would like to have the option
+of many different forms of user interface, not just the traditional telnet
+connection that MUDs are typically known for. My implementation of screens is a
+good solution for the telnet crowd, but it makes more modern UIs harder to
+build.
+
+In hindsight, the more modern clients are going to be directly responsible for
+managing the interface, they will interact with the server via JSON and handle
+the display themselves. The telnet system should be no different. I should move
+the screens to the telnet connection manger and treat it as an interface, just
+like I would everything else. That way, the actual game logic is simplified.
+I'll come up with a plan of attack for this approach over the coming days.
+
+Where I have found time for development, I've been working on test coverage. A
+side effect of switching to NX means that I lost the tests that I had already
+written. This turned out to not be so bad as I found some bugs that my tests
+validated, rather than catch and force me to fix. I will continue to work
+through in the background adding test coverage, once I hid a certain threshold,
+I will also enable a ithubAction to run tests on PRs and the main branches.
+
 ## Migration to NX (Sunday 1st August 2021)
 
 I have decided to migrate the application to use the NX.dev workspace
